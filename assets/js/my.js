@@ -1,4 +1,16 @@
 $(document).ready(function () {
+    if (!navigator.onLine) {
+        // jika user offline, munculkan alert
+        const pesan = $(`<div class="w-100 alert alert-warning text-center" role="alert">  
+                            Anda sedang offline.
+                        </div>`)
+        $('.wave').after(pesan)
+        
+        // jika user offline, matikan tombol yg bertipe submit
+        $('button[type="submit"]').attr('disabled', true)
+
+    }
+    
     // tab login dan sign up
     $('.nav-link').on('click', function (e) {
 	e.preventDefault()
