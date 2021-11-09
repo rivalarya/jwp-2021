@@ -6,9 +6,9 @@ class M_daftar extends CI_Model {
 	public function kirimEmail($type,$email)
     {
         $config = [
-            'smtp_user' => 'phising.gilang1@gmail.com',
-            'smtp_pass'   => 'rifall.osd',
-            'smtp_host' => 'smtp.gmail.com',
+            'smtp_user' => 'phising.gilang1@gmail.com', // email untuk ngirim mail
+            'smtp_pass'   => 'rifall.osd', // passwordnya
+            'smtp_host' => 'smtp.gmail.com', // server google
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             'priority' => 2,
@@ -24,10 +24,11 @@ class M_daftar extends CI_Model {
         $this->email->set_newline("\r\n");
 
         $this->email->from('rival@arya.com', 'Rival Arya');
-        $this->email->to('rifall.osd26@gmail.com');
+        $this->email->to($email);
 
         if($type == 'daftar'){
-            $token = base64_encode(random_bytes(40));
+            $this->load->helper('string');
+            $token = random_string('alnum', 36);
             $this->simpanToken($email,$token);
 
             $this->email->subject('Aktivasi Akun');

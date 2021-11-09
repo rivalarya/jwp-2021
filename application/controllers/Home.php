@@ -38,7 +38,6 @@ class Home extends CI_Controller {
 
 	public function daftar()
 	{
-		// $this->m_daftar->daftar();
 		$nama = $this->input->post('nama');
         $email = $this->input->post('email');
         $password = $this->input->post('password');
@@ -63,15 +62,18 @@ class Home extends CI_Controller {
                 }
             }else{};
     
-            $data = array(
-                'nama' => html_escape($nama),
-                'email' => html_escape($email),
-                'password' => html_escape($password),
-                'foto' => $foto,
-                'is_active' => 0
-            );
-            $this->db->insert('users', $data);
-            $this->index();
+			if($this->m_daftar->kirimEmail('daftar',$email)){
+				$data = array(
+					'nama' => html_escape($nama),
+					'email' => html_escape($email),
+					'password' => password_hash(html_escape($password), PASSWORD_BCRYPT),
+					'foto' => $foto,
+					'is_active' => 0
+				);
+				$this->db->insert('users', $data);
+				$this->index();
+			}
+		
         }
 	}
 }

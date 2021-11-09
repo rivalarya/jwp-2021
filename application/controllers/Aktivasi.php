@@ -12,6 +12,8 @@ class Aktivasi extends CI_Controller {
 		$email = $this->input->get('email');
         $cariEmail = $this->db->get_where('users', array('email' => $email))->result();
 		$token = $this->input->get('token');
+        if($email == '') redirect('home'); // jika parameter email kosong, arahkan ke home
+        if($token == '') redirect('home'); // jika parameter token kosong, arahkan ke home
         
         $cariToken = $this->db->query("SELECT token from user_token");
 
