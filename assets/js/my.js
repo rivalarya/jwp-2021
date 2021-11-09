@@ -8,7 +8,6 @@ $(document).ready(function () {
         
         // jika user offline, matikan tombol yg bertipe submit
         $('button[type="submit"]').attr('disabled', true)
-
     }
     
     // tab login dan sign up
