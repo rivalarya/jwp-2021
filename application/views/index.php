@@ -16,6 +16,16 @@
             <?php echo $this->session->flashdata('email_gagal_dikirim'); ?>
         </div>
         <?php endif;?>
+        <?php if($this->session->flashdata('belum_aktivasi')): ?>
+        <div class="w-100 alert alert-warning text-center" role="alert">  
+            <?php echo $this->session->flashdata('belum_aktivasi'); ?>
+        </div>
+        <?php endif;?>
+        <?php if($this->session->flashdata('belum_daftar')): ?>
+        <div class="w-100 alert alert-danger text-center" role="alert">  
+            <?php echo $this->session->flashdata('belum_daftar'); ?>
+        </div>
+        <?php endif;?>
     <div class="col-sm-7 p-2 border border-primary mx-auto shadow bg-light rounded">
         <ul class="nav nav-pills mb-3 justify-content-around" id="pills-tab" role="tablist">
             <li class="nav-item">
@@ -30,7 +40,7 @@
         <hr>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab">
-                <form class="text-center" method="POST" action="<?= base_url('login');?>">
+                <form class="text-center" method="POST" action="<?= base_url('welcome/login');?>">
                     <div class="col mt-5">
                         <div class="form-group">
                             <input type="text" id="email" placeholder="Masukkan Email" autocomplete="off" required
