@@ -1,11 +1,22 @@
 <div class="wave"></div>
 <div class="container-fluid row align-content-center vh-100 mx-auto">
-	<?php if(validation_errors()): ?>
-	<div class="w-100 alert alert-danger text-center" role="alert">  
-		<?php echo validation_errors(); ?>
-	</div>
-	<?php endif;?>
-    <div class="container p-2 border border-primary mx-auto shadow bg-light rounded">
+    <?php // pengkondisian ?>
+        <?php if(validation_errors()): ?>
+        <div class="w-100 alert alert-danger text-center" role="alert">  
+            <?php echo validation_errors(); ?>
+        </div>
+        <?php endif;?>
+        <?php if($this->session->flashdata('email_dikirim')): ?>
+        <div class="w-100 alert alert-success text-center" role="alert">  
+            <?php echo $this->session->flashdata('email_dikirim'); ?>
+        </div>
+        <?php endif;?>
+        <?php if($this->session->flashdata('email_gagal_dikirim')): ?>
+        <div class="w-100 alert alert-danger text-center" role="alert">  
+            <?php echo $this->session->flashdata('email_gagal_dikirim'); ?>
+        </div>
+        <?php endif;?>
+    <div class="col-sm-7 p-2 border border-primary mx-auto shadow bg-light rounded">
         <ul class="nav nav-pills mb-3 justify-content-around" id="pills-tab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link aktif" id="pills-login-tab" data-toggle="tab" href="#pills-login" role="tab"
