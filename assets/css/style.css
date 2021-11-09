@@ -5,8 +5,8 @@
 	--pallete3: rgba(38, 164, 242, 1);
 	--pallete4: rgba(242, 231, 75, 1);
 	--pallete5: rgba(220, 225, 242, 1);
+	
 }
-
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -34,6 +34,7 @@ body {
 #pills-daftar-tab {
 	position: relative;
 	color: var(--pallete2)!important;	
+	font-size: calc(1vmax + .6rem);
 }
 
 .aktif{
@@ -44,7 +45,7 @@ transition: 1s;
 	width: 71px;
 	height: 4px;
 	bottom: -1px;
-	left: 3px;
+	left: min(9px, 12%);
 	z-index: 1;
 	border-radius: 3px;
 	background-color: var(--pallete4);
@@ -59,13 +60,14 @@ transition: 1s;
 	border-bottom: 3px;
 	border-color: var(--pallete3);
 	padding: 1%;
-	width: 60%;
+	width: 50%;
+	font-size: calc(.9vmax + .4rem);
 	transition: .3s;
 }
 
 .input--custom:focus {
 	border-left: 0;
-	width:80%;
+	width:70%;
 	outline: none;
 	box-shadow: 0 2px var(--pallete3);
 	transition: .3s;
@@ -87,14 +89,24 @@ label{
 	background-color: var(--pallete3);
 }
 
-
 /* // Small devices (landscape phones, 576px and up) */
 @media (max-width: 576px) {
-	
+	.input--custom {
+		padding: 2%;
+		width: 55%;
+		font-size: calc(1vmax + .6rem);
+		transition: .3s;
+	}
+
+	.input--custom:focus {
+		width: 70%;
+	}
 }
 
 /* // Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {}
+@media (min-width: 768px) {
+	
+}
 
 /* // Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {}

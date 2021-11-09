@@ -32,7 +32,7 @@ class Aktivasi extends CI_Controller {
         $this->db->query("SELECT * FROM users WHERE email = '$email' AND is_active = 0");//cek akunnya        
         $is_already = $this->db->affected_rows();// lalu ubah ke affected row
 
-        if ($is_already >= 1)
+        if ($is_already >= 1) // 1 = ditemukan
         {
             $cekToken = $this->db->query("SELECT * FROM user_token WHERE email = '$email' AND token = '$token'");
             if($cekToken == true){                

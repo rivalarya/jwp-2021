@@ -14,8 +14,17 @@ class M_login extends CI_Model {
 			foreach ($is_active->result() as $row)
 			{
 				if($row->is_active == '1'){ // nilai 1 artinya sudah aktif, sedangkan 0 artinya belum diaktivasi
-					$this->session->set_userdata('login',true);
-					redirect('home');
+                    foreach($query->result() as $row){
+                        if($pass = password_verify($password,$row->password)){//unhash password
+                            $this->session->set_userdata('login',true);
+                            $this->session->set_userdata('email',$email);
+                            $this->session->set_userdata('password',$password);
+                            redirect('home');
+                        }else{
+                            $this->session->set_flashdata('password_salah', 'Password salah.');
+					        redirect('welcome');
+                        }
+                    }
 				}else{
 					$this->session->set_flashdata('belum_aktivasi', 'Akun belum di aktivasi. Silahkan cek email anda. jika tidak ada, periksa folder spam.');
 					redirect('welcome');

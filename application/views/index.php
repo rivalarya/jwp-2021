@@ -11,6 +11,11 @@
             <?php echo $this->session->flashdata('email_dikirim'); ?>
         </div>
         <?php endif;?>
+        <?php if($this->session->flashdata('password_salah')): ?>
+        <div class="w-100 alert alert-danger text-center" role="alert">  
+            <?php echo $this->session->flashdata('password_salah'); ?>
+        </div>
+        <?php endif;?>
         <?php if($this->session->flashdata('email_gagal_dikirim')): ?>
         <div class="w-100 alert alert-danger text-center" role="alert">  
             <?php echo $this->session->flashdata('email_gagal_dikirim'); ?>
