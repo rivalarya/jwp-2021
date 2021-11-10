@@ -5,7 +5,7 @@ class Welcome extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-        $this->load->model('m_daftar');
+        $this->load->model('m_auth');
 		if($this->session->login != '') redirect('home'); // jika sudah punya sesi, langsung masuk ke home
 	}
 	 
@@ -48,7 +48,7 @@ class Welcome extends CI_Controller {
                 }
             }else{};
     
-			if($this->m_daftar->kirimEmail('daftar',$email)){
+			if($this->m_auth->kirimEmail('daftar',$email)){
 				$data = array(
 					'nama' => html_escape($nama),
 					'email' => html_escape($email),
@@ -57,7 +57,7 @@ class Welcome extends CI_Controller {
 					'is_active' => 0
 				);
 				$this->db->insert('users', $data);
-				redirect('home');
+				$this->index();
 			}
 		
         }

@@ -16,9 +16,15 @@ class M_login extends CI_Model {
 				if($row->is_active == '1'){ // nilai 1 artinya sudah aktif, sedangkan 0 artinya belum diaktivasi
                     foreach($query->result() as $row){
                         if($pass = password_verify($password,$row->password)){//unhash password
-                            $this->session->set_userdata('login',true);
-                            $this->session->set_userdata('email',$email);
-                            $this->session->set_userdata('password',$password);
+                            $sesi = array(
+                                'nama'  => $row->nama,
+                                'login'  => true,
+                                'email'     => $email,
+                                'password' => $password,
+                                'foto' => $row->foto
+                            );
+
+                            $this->session->set_userdata($sesi);
                             redirect('home');
                         }else{
                             $this->session->set_flashdata('password_salah', 'Password salah.');

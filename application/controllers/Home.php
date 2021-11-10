@@ -17,7 +17,7 @@ class Home extends CI_Controller {
 
 	public function logout()
 	{
-		unset($_SESSION['login'],$_SESSION['nama'],$_SESSION['email'],$_SESSION['password']);
+		unset($_SESSION['login'],$_SESSION['nama'],$_SESSION['email'],$_SESSION['password'],$_SESSION['foto']);
 		redirect('welcome');
 	}
 	

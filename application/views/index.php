@@ -64,7 +64,7 @@
             <div class="tab-pane fade" id="pills-daftar" role="tabpanel" aria-labelledby="pills-daftar-tab">
                 <div class="tab-pane fade show active" id="pills-daftar" role="tabpanel"
                     aria-labelledby="pills-daftar-tab">
-                    <form class="text-center" method="POST" enctype="multipart/form-data" action="<?= base_url('home/daftar');?>" accept-charset="utf-8">
+                    <form class="text-center" method="POST" enctype="multipart/form-data" action="<?= base_url('welcome/daftar');?>" accept-charset="utf-8">
                         <div class="col form-group">
                             <figure class="figure">
                                 <img src="<?= base_url('assets/img/user.png');?>"
