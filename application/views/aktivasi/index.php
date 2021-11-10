@@ -38,9 +38,9 @@
                 <h2><?php echo $this->session->flashdata('email_tidak_ditemukan'); ?></h2>
             </div>
             <?php endif;?>
-            <?php if($this->session->flashdata('token_tidak_ditemukan')): ?>
+            <?php if($this->session->flashdata('token_salah')): ?>
             <div class="w-100 d-flex justify-content-center align-items-center text-center red h-100">
-                <h2><?php echo $this->session->flashdata('token_tidak_ditemukan'); ?></h2>
+                <h2><?php echo $this->session->flashdata('token_salah'); ?></h2>
             </div>
             <?php endif;?>
             <?php if($this->session->flashdata('akun_tidak_ditemukan')): ?>

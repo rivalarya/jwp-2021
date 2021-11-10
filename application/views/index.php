@@ -11,6 +11,11 @@
             <?php echo $this->session->flashdata('email_dikirim'); ?>
         </div>
         <?php endif;?>
+        <?php if($this->session->flashdata('berhasil_diganti')): ?>
+        <div class="w-100 alert alert-success text-center" role="alert">  
+            <?php echo $this->session->flashdata('berhasil_diganti'); ?>
+        </div>
+        <?php endif;?>
         <?php if($this->session->flashdata('password_salah')): ?>
         <div class="w-100 alert alert-danger text-center" role="alert">  
             <?php echo $this->session->flashdata('password_salah'); ?>
@@ -48,15 +53,13 @@
                 <form class="text-center" method="POST" action="<?= base_url('welcome/login');?>">
                     <div class="col mt-5">
                         <div class="form-group">
-                            <input type="text" id="email" placeholder="Masukkan Email" autocomplete="off" required
-                                name="email" class="input--custom mt-1 pl-2">
+                            <input type="email" id="email" placeholder="Masukkan Email" autocomplete="off" required name="email" class="input--custom mt-1 pl-2">
                         </div>
                         <div class="form-group">
                             <input type="password" id="password" placeholder="Masukkan Password" required
                                 name="password" class="input--custom mt-2 pl-2">
                         </div>
-                        <a href="<?= base_url('lupa_kata_sandi'); ?>" class="justify-content-end row mr-2">Lupa kata
-                            sandi?</a>
+                        <a href="<?= base_url('welcome/lupa_sandi'); ?>" class="justify-content-end row mr-2">Lupa kata sandi?</a>
                         <button type="submit" class="btn btn-primary mb-2 mt-3">Login</button>
                     </div>
                 </form>
@@ -80,7 +83,7 @@
                                 <input type="text" placeholder="Masukkan Nama" value="<?php echo set_value('nama'); ?>" required name="nama" class="input--custom mt-1 pl-2">
                             </div>
                             <div class="form-group">
-                                <input type="text" placeholder="Masukkan Email" required name="email" class="input--custom mt-1 pl-2">
+                                <input type="email" placeholder="Masukkan Email" required name="email" class="input--custom mt-1 pl-2">
                             </div>
                             <div class="form-group">
                                 <input type="password" placeholder="Masukkan Password" required name="password" class="input--custom mt-2 pl-2">
