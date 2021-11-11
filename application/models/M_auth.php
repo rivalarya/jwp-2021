@@ -14,7 +14,9 @@ class M_auth extends CI_Model {
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
         $this->form_validation->set_rules('password', 'Password', 'required');
         if ($this->form_validation->run() == FALSE) {
-            redirect("welcome", 'location');
+            $this->load->view('templates/header');
+            $this->load->view('index');
+            $this->load->view('templates/footer');
         } else {
 
             if (!$foto == '') {
@@ -27,8 +29,7 @@ class M_auth extends CI_Model {
                 } else {
                     redirect("welcome", 'location');
                 }
-            } else {
-            };
+            } else {};
 
             if ($this->kirimEmail('daftar', $email)) {
                 $data = array(
@@ -52,7 +53,9 @@ class M_auth extends CI_Model {
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
         if ($this->form_validation->run() == FALSE) {
-            redirect("welcome", 'location');
+            $this->load->view('templates/header');
+            $this->load->view('index');
+            $this->load->view('templates/footer');
         }else{
             $query = $this->db->query("SELECT * FROM users WHERE email = '$email'");
             if ($query->result() !== []) { // jika email ada
@@ -77,7 +80,7 @@ class M_auth extends CI_Model {
                             }
                         }
                     } else {
-                        $this->session->set_flashdata('belum_aktivasi', 'Akun belum di aktivasi. Silahkan cek email anda. jika tidak ada, periksa folder spam.');
+                        $this->session->set_flashdata('belum_aktivasi', 'Akun belum di aktivasi. Silahkan cek email anda. jika tidak ada, periksa spam.');
                         redirect("welcome", 'location');
                     }
                 }
@@ -124,16 +127,17 @@ class M_auth extends CI_Model {
                 return true;
             }else{
                 $this->session->set_flashdata('email_gagal_dikirim', 'Daftar gagal, silahkan coba lagi nanti.');
+                redirect("welcome", 'location');
                 // echo $this->email->print_debugger();
-                die;
+                // die;
             }
 
         }else{
             $this->load->helper('string');
-            $kode = random_string('basic', 6);
+            $kode = random_string('numeric', 6);
             
             $this->email->subject('Ganti kata sandi');
-            $this->email->message('Anda lupa kata sandi anda. <a href='.base_url("lupa_sandi?email=$email&kode=$kode").'>Klik untuk mengganti</a>');
+            $this->email->message('Anda lupa kata sandi anda. <br>Kode verifikasi : '.$kode. ' <br><a href='.base_url("lupa_sandi?email=$email&kode=$kode").'>Klik untuk mengganti</a>');
             
             if($this->email->send()){
                 $this->simpanKode($email,$kode); // jika berhasil dikirim, simpan ke database
@@ -141,8 +145,9 @@ class M_auth extends CI_Model {
                 return true;
             }else{
                 $this->session->set_flashdata('email_gagal_dikirim', 'Gagal, silahkan coba lagi nanti.');
+                redirect("welcome", 'location');
                 // echo $this->email->print_debugger();
-                die;
+                // die;
             }
         }
 
@@ -159,12 +164,17 @@ class M_auth extends CI_Model {
     }
 
     public function simpankode($email,$kode)
-    {  
-        $data = [
-            'email' => $email,
-            'kode'   => $kode
-        ];
+    {
+        $sudahMinta = $this->db->query("SELECT * FROM request_forgot WHERE email = '$email'");
+        if($sudahMinta->result() == []){
+            $data = [
+                'email' => $email,
+                'kode'   => $kode
+            ];
+            $this->db->insert('request_forgot', $data);
+        }else {// jika user sudah pernah dikirim email untuk ganti namun minta lagi, ganti kode nya di database
+            $this->db->query("UPDATE request_forgot set kode = '$kode' WHERE email = '$email'");
+        }
 
-        $this->db->insert('request_forgot', $data);
     }
 }

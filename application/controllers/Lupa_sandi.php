@@ -11,10 +11,6 @@ class Lupa_sandi extends CI_Controller {
 	 
 	public function index()
 	{        
-
-		$email = $this->input->get('email');
-        $this->session->set_userdata('email_ganti',$email);// beri sesi berisi email agar auto terisi saat pertama kali halaman dibuka
-
         $this->load->view('templates/header');
 		$this->load->view('lupa_sandi/cek_kode');
 		$this->load->view('templates/footer');        
@@ -26,12 +22,14 @@ class Lupa_sandi extends CI_Controller {
         $email = $this->input->post('email');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         if ($this->form_validation->run() == FALSE) {
-            redirect("welcome/index", 'location');
+            $this->load->view('templates/header');
+            $this->load->view('welcome/index');
+            $this->load->view('templates/footer');
         }else{
             $cariEmail = $this->db->query("SELECT * FROM users WHERE email = '$email'");
-            if ($cariEmail->result() !== []) { // jika email ad(sudah pernah daftar)
-                $this->m_auth->kirimEmail('lupa_sandi',$email);
-                $this->index();
+            if ($cariEmail->result() !== []) { // jika email ada(sudah pernah daftar)
+                    $this->m_auth->kirimEmail('lupa_sandi',$email);
+                    redirect(base_url("welcome/lupa_sandi"), 'location');
             }else{
                 $this->session->set_flashdata('belum_daftar', 'Akun anda belum terdaftar. Silahkan <a href="../">daftar</a> terlebih dahulu.');
                 redirect(base_url("welcome/lupa_sandi"), 'location');
@@ -44,10 +42,12 @@ class Lupa_sandi extends CI_Controller {
         $email = $this->input->post('email');
         $kode = $this->input->post('kode');
 
+        $this->session->set_userdata('email_ganti', $email);// beri sesi berisi email agar auto terisi saat pertama kali halaman dibuka
+
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('kode', 'Kode', 'required');
         if ($this->form_validation->run() == FALSE) {
-            redirect("lupa_sandi", 'location');
+            $this->index();
         }else{  
 
             $cariAkunDiForgot = $this->db->query("SELECT * FROM request_forgot WHERE email = '$email'")->row();
@@ -56,7 +56,7 @@ class Lupa_sandi extends CI_Controller {
                 $cekKode = $this->db->query("SELECT * FROM request_forgot WHERE email = '$email' AND kode = '$kode'")->row();
                 if($cekKode != []){
                     $this->session->set_userdata('ganti_sandi',true);
-                    $this->ganti();
+                    redirect('lupa_sandi/ganti');
                 }else{
                     $this->session->set_flashdata('kode_salah', 'Kode salah, silahkan periksa lagi.');
                     redirect(base_url("lupa_sandi?email=$email"),'location');
@@ -86,7 +86,7 @@ class Lupa_sandi extends CI_Controller {
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
         if ($this->form_validation->run() == FALSE) {
-            redirect("lupa_sandi/ganti", 'location');
+            $this->ganti();
         }else{
             $cariAkun = $this->db->query("SELECT * FROM users WHERE email = '$email'")->row();
             if($cariAkun != null){                

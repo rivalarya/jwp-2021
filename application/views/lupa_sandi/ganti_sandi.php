@@ -5,12 +5,6 @@
             <?php echo $this->session->flashdata('berhasil_diganti'); ?>
         </div>
     <?php endif; ?>
-    <?php if ($this->session->userdata('ganti_sandi') == '') : ?>
-        redirect('welcome');
-        <!-- <div class="w-100 alert alert-success text-center" role="alert">
-            <?php echo $this->session->flashdata('berhasil_diganti'); ?>
-        </div> -->
-    <?php endif; ?>
     <div class="col-sm-7 p-2 border border-primary mx-auto shadow bg-light rounded">
         <div class="nav-item">
             <a class="nav-link text-center font-weight-bold"><b>Ganti kata sandi</b></a>
