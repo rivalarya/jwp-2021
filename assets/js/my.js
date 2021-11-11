@@ -1,16 +1,19 @@
 $(document).ready(function () {
-    setTimeout(() => { 
+    setInterval(() => { 
         if (!navigator.onLine) {
-            // jika user offline, munculkan alert
-            const pesan = $(`<div class="w-100 alert alert-warning text-center" role="alert">  
+            const pesan = $(`<div class="w-100 alert alert-warning text-center offline" role="alert">  
                                 Anda sedang offline.
                             </div>`)
-            $('.wave').after(pesan)
-            
+            // jika user offline, munculkan alert  
+            if ($('.offline').length == 0) $('.wave').append(pesan)            
             // jika user offline, matikan tombol yg bertipe submit
             $('button[type="submit"]').attr('disabled', true)
-        }        
-    }, 1000);
+        } else {
+            // jika user kembali online, hapus alert dan false kan disabled di button
+            $('.offline').remove()
+            $('button[type="submit"]').attr('disabled', false)
+        }     
+    }, 1400);
     
     // tab login dan sign up
     $('.nav-link').on('click', function (e) {
